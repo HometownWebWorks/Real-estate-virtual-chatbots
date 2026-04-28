@@ -1,6 +1,6 @@
 # Chatbot Requirements
 
-Last updated: April 27, 2026 9:38 PM -04:00
+Last updated: April 27, 2026 11:26 PM -04:00
 
 ## Purpose
 
@@ -42,8 +42,9 @@ The same buyer and seller chatbot flows should be available through multiple lau
 ## Technical Stack
 
 - Next.js for the chatbot interface.
-- Next.js API routes for backend endpoints.
-- OpenAI API for chat responses and conversational FAQ behavior.
+- Free static demo should use built-in frontend FAQ responses so it can be hosted on GitHub Pages without backend hosting.
+- OpenAI API responses should be reserved for higher paid plans that include backend/serverless hosting.
+- Next.js API routes can be reintroduced for paid versions that need OpenAI, email alerts, Google Sheets, SMS, or CRM integrations.
 
 ## Shared Introductory Questions
 
@@ -132,11 +133,12 @@ The chatbot should be able to answer common buyer and seller questions. Initial 
 
 ## Optional Future Features
 
-These ideas are side notes for later and are not required for the first version:
+These ideas are paid-plan upgrades or side notes for later and are not required for the free static demo:
 
 - Optional Google Sheets lead storage
 - Optional EmailJS email alerts to agents
 - Optional calendar booking link
+- Optional OpenAI API responses
 
 ## Future Notes
 

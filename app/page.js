@@ -38,6 +38,17 @@ const faqs = [
   "How fast can an agent follow up?"
 ];
 
+const staticFaqAnswers = {
+  "How does pre-approval work?":
+    "Pre-approval helps show what price range may fit before you tour homes. If you need help, an agent can point you toward a lender or explain what to prepare.",
+  "What should I do before touring?":
+    "Before touring, it helps to know your preferred area, budget, timeline, and must-have features so the agent can focus on homes that fit.",
+  "How does home valuation work?":
+    "A home valuation estimates what your property may sell for based on details like location, condition, recent comparable sales, and current buyer demand.",
+  "How fast can an agent follow up?":
+    "Once your details are submitted, a real estate professional can review your answers and follow up with the next best step."
+};
+
 function money(value) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -93,7 +104,6 @@ export function ChatbotApp({ lockedMode = null }) {
   const [mode, setMode] = useState(lockedMode || "buyer");
   const [lead, setLead] = useState(blankLead);
   const [faqAnswer, setFaqAnswer] = useState("");
-  const [faqLoading, setFaqLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const update = (key, value) => {
@@ -113,23 +123,8 @@ export function ChatbotApp({ lockedMode = null }) {
     return "Start with your contact details.";
   }, [mode, lead, submitted]);
 
-  async function askFaq(question) {
-    setFaqLoading(true);
-    setFaqAnswer("");
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, leadType: mode })
-      });
-      const data = await response.json();
-      setFaqAnswer(data.answer || "I can help with that. An agent can follow up with more detail.");
-    } catch {
-      setFaqAnswer("I can help with that. An agent can follow up with more detail.");
-    } finally {
-      setFaqLoading(false);
-    }
+  function askFaq(question) {
+    setFaqAnswer(staticFaqAnswers[question] || "I can help with that. An agent can follow up with more detail.");
   }
 
   return (
@@ -279,8 +274,8 @@ export function ChatbotApp({ lockedMode = null }) {
                 </button>
               ))}
             </div>
-            {(faqLoading || faqAnswer) && (
-              <div className="bubble faq-answer">{faqLoading ? "Checking that for you..." : faqAnswer}</div>
+            {faqAnswer && (
+              <div className="bubble faq-answer">{faqAnswer}</div>
             )}
           </div>
         </div>

@@ -116,9 +116,19 @@ How this will be used:
 - Included plan features, recommended customer types, sales talking points, optional add-ons, and value positioning.
 - Added market reference notes explaining why the pricing can be valuable compared with generic templates and larger real estate platforms.
 
+## April 27, 2026 Late Update
+
+### 11:26 PM - Converted To Free Static GitHub Pages Demo
+- Converted the live chatbot demo to a static-friendly version for free GitHub Pages hosting.
+- Removed the Next.js API route from the free demo and replaced FAQ behavior with built-in frontend responses.
+- Configured Next.js static export with GitHub Pages base path support for `HometownWebWorks/Real-estate-virtual-chatbots`.
+- Added `.github/workflows/deploy.yml` so pushes to `main` can build and deploy the static `out/` folder through GitHub Actions.
+- Documented that OpenAI responses, email alerts, Google Sheets, SMS, CRM integrations, and calendar booking should be paid-plan upgrades rather than part of the free static demo.
+
 ## Next Planned Step
 
 ### Chatbot Prototype Build
 - Continue refining the working Next.js chatbot prototype for client-facing realtor demos.
-- Add real OpenAI API configuration through environment variables when ready.
-- Later, optionally add Google Sheets lead storage, EmailJS alerts, calendar booking links, and QR generation.
+- Enable GitHub Pages deployment from GitHub Actions in the repository settings.
+- Use the static GitHub Pages links for the free buyer/seller demo.
+- Later, add real OpenAI API responses, Google Sheets lead storage, EmailJS alerts, calendar booking links, SMS, CRM integrations, and QR generation as paid-plan upgrades.

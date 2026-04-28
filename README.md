@@ -12,8 +12,8 @@ The first build step is to define two chatbot flows: one for buyers and one for 
 - `CHATBOT_REQUIREMENTS.md` will hold the chatbot question flow, lead details, handoff logic, and future feature notes.
 - `preview.html` is a static visual preview of the user-facing chatbot experience.
 - `app/` contains the working Next.js chatbot prototype.
-- `app/api/chat/route.js` contains the FAQ/chat API route with OpenAI API support when an API key is configured.
 - `PRICING_OPTIONS.md` contains the current service pricing tiers and value positioning.
+- `.github/workflows/deploy.yml` publishes the static demo to GitHub Pages when changes are pushed to `main`.
 
 ## Local Prototype
 
@@ -29,10 +29,31 @@ Separate client-facing demo links:
 
 The live URL is intended to feel like a real buyer/seller chatbot demo for potential realtor partnerships. Product details such as launch options, Google Sheets, EmailJS, QR codes, and other implementation notes are documented separately so the public demo stays clean and client-facing.
 
+## Free Static Deployment
+
+This demo is configured for free static hosting on GitHub Pages.
+
+Static demo behavior:
+
+- Buyer and seller forms work in the browser.
+- FAQ answers use built-in frontend responses.
+- No OpenAI API key or backend hosting is required.
+
+GitHub Pages links after deployment should look like:
+
+- `https://hometownwebworks.github.io/Real-estate-virtual-chatbots/`
+- `https://hometownwebworks.github.io/Real-estate-virtual-chatbots/buyer/`
+- `https://hometownwebworks.github.io/Real-estate-virtual-chatbots/seller/`
+
+In the GitHub repository, set Pages to deploy from **GitHub Actions**.
+
+OpenAI responses, email alerts, Google Sheets lead tracking, SMS alerts, CRM integrations, and calendar booking are paid-plan upgrades, not part of the free static demo.
+
 Useful commands:
 
 - `npm run dev` starts the local prototype.
 - `npm run build` verifies the production build.
+- `npm run build:github` creates a GitHub Pages static export locally on Windows.
 
 ## Next Build Step
 

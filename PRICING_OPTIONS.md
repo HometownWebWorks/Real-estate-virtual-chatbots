@@ -24,7 +24,7 @@ Includes:
 - Lead capture through chat
 - Buyer or seller intake flow
 - Basic qualification questions
-- FAQ answers
+- Built-in FAQ answers
 - Email alerts
 - Direct chatbot link
 - Basic mobile-friendly design
@@ -44,6 +44,7 @@ Includes everything in Starter, plus:
 
 - Custom branding
 - Buyer and seller chatbot flows
+- OpenAI-powered FAQ/chat responses
 - Google Sheets lead tracker
 - Calendar booking link
 - More tailored chatbot wording
@@ -147,4 +148,3 @@ Sources:
 - [Realty AI Pricing](https://www.realty-ai.com/pricing)
 - [Luxury Presence - Best Real Estate Chatbots](https://www.luxurypresence.com/blogs/best-real-estate-chatbots/)
 - [TechRadar - Chime CRM Review](https://www.techradar.com/reviews/chime-crm-review)
-
