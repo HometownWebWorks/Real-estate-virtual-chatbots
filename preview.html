@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Virtual Chatbots Preview</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --ink: #162033;
+      --muted: #5d6c83;
+      --line: #d5dfeb;
+      --soft: #eef5f7;
+      --panel: rgba(255, 255, 255, 0.97);
+      --card: #ffffff;
+      --question-card: #f8fbff;
+      --answer-card: #eef8f6;
+      --chat-surface: linear-gradient(180deg, #f9fcff, #eef5f8);
+      --primary: #1766b1;
+      --primary-dark: #0d4f91;
+      --accent: #0f8f86;
+      --success-bg: #e6f7ef;
+      --success-text: #116b51;
+      --button-text: #ffffff;
+      --image-wash: linear-gradient(120deg, rgba(250, 253, 255, 0.9), rgba(235, 246, 248, 0.86));
+      --shadow: 0 22px 52px rgba(22, 32, 51, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        var(--image-wash),
+        url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=80") center/cover fixed;
+      min-height: 100vh;
+      font-size: 16px;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(280px, 420px) minmax(320px, 1fr);
+      gap: 24px;
+      padding: 28px;
+      align-items: stretch;
+    }
+
+    .lead-panel,
+    .chat-panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .lead-panel {
+      border-radius: 8px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      background: var(--primary);
+      display: grid;
+      place-items: center;
+      color: var(--button-text);
+      font-size: 18px;
+      box-shadow: 0 10px 22px rgba(23, 102, 177, 0.28);
+    }
+
+    h1 {
+      font-size: 36px;
+      line-height: 1.06;
+      margin: 26px 0 12px;
+      letter-spacing: 0;
+      color: var(--ink);
+    }
+
+    .intro {
+      color: var(--muted);
+      line-height: 1.62;
+      margin: 0;
+      font-size: 15.5px;
+    }
+
+    .mode-toggle {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 5px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--soft);
+      margin: 22px 0;
+    }
+
+    .mode-toggle button {
+      border: 0;
+      border-radius: 6px;
+      padding: 10px 12px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .mode-toggle button.active {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 4px 14px rgba(23, 32, 51, 0.1);
+    }
+
+    .summary-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      padding: 16px;
+    }
+
+    .summary-card h2 {
+      font-size: 15px;
+      margin: 0 0 14px;
+      color: var(--ink);
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 11px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .summary-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .summary-list strong {
+      color: var(--ink);
+      text-align: right;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: var(--success-bg);
+      color: var(--success-text);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .launch-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .launch-option {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
+      padding: 12px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .launch-option span {
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .launch-option strong {
+      font-size: 13px;
+    }
+
+    .launch-option small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .chat-panel {
+      border-radius: 8px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      min-height: 720px;
+    }
+
+    .chat-header {
+      border-bottom: 1px solid var(--line);
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--card);
+    }
+
+    .chat-title {
+      display: grid;
+      gap: 4px;
+    }
+
+    .chat-title strong {
+      font-size: 16px;
+    }
+
+    .chat-title span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--primary) 9%, var(--card));
+      color: var(--primary-dark);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .messages {
+      padding: 24px;
+      background: var(--chat-surface);
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message {
+      max-width: min(620px, 88%);
+      display: grid;
+      gap: 8px;
+    }
+
+    .message.bot {
+      align-self: flex-start;
+    }
+
+    .message.user {
+      align-self: flex-end;
+      justify-items: end;
+    }
+
+    .bubble {
+      border-radius: 8px;
+      padding: 13px 15px;
+      line-height: 1.5;
+      box-shadow: 0 8px 20px rgba(23, 32, 51, 0.08);
+      font-size: 15.5px;
+    }
+
+    .bot .bubble {
+      background: var(--question-card);
+      border: 1px solid var(--line);
+    }
+
+    .user .bubble {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--button-text);
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .field,
+    .select-field,
+    .text-field {
+      border: 1px solid var(--line);
+      background: var(--answer-card);
+      border-radius: 7px;
+      padding: 11px 12px;
+      color: var(--ink);
+      min-width: 0;
+    }
+
+    .field {
+      min-height: 46px;
+      resize: vertical;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      line-height: 1.35;
+    }
+
+    .text-field {
+      width: min(520px, 100%);
+      min-height: 82px;
+      resize: vertical;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .field::placeholder,
+    .composer input::placeholder,
+    .text-field::placeholder {
+      color: var(--muted);
+    }
+
+    .range-card {
+      border: 1px solid var(--line);
+      background: var(--answer-card);
+      border-radius: 8px;
+      padding: 14px;
+      width: min(540px, 100%);
+    }
+
+    .range-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .range-value {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .chip {
+      border: 1px solid var(--line);
+      background: var(--answer-card);
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .chip.active {
+      border-color: var(--primary);
+      background: color-mix(in srgb, var(--primary) 10%, var(--card));
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: min(600px, 100%);
+    }
+
+    .faq-grid button {
+      text-align: left;
+      border: 1px solid var(--line);
+      background: var(--answer-card);
+      border-radius: 7px;
+      padding: 10px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .composer {
+      border-top: 1px solid var(--line);
+      padding: 16px;
+      background: var(--card);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .composer input {
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      border-radius: 7px;
+      padding: 12px 13px;
+      min-width: 0;
+    }
+
+    .composer button {
+      border: 0;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--button-text);
+      border-radius: 7px;
+      padding: 0 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .side-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --ink: #eef4fb;
+        --muted: #aec0d4;
+        --line: #314158;
+        --soft: #122236;
+        --panel: rgba(13, 23, 38, 0.96);
+        --card: #142236;
+        --question-card: #182a42;
+        --answer-card: #123436;
+        --chat-surface: linear-gradient(180deg, #0f1d2f, #12263a);
+        --primary: #69aef8;
+        --primary-dark: #cfe6ff;
+        --accent: #55d2bf;
+        --success-bg: rgba(85, 210, 191, 0.14);
+        --success-text: #80ead7;
+        --button-text: #07111f;
+        --image-wash: linear-gradient(120deg, rgba(8, 14, 24, 0.9), rgba(15, 31, 47, 0.88));
+        --shadow: 0 24px 58px rgba(0, 0, 0, 0.42);
+      }
+
+      .mode-toggle button.active,
+      .bubble,
+      .summary-card,
+      .launch-option,
+      .field,
+      .select-field,
+      .text-field,
+      .range-card,
+      .chip,
+      .faq-grid button,
+      .composer input {
+        box-shadow: none;
+      }
+
+      .user .bubble,
+      .composer button {
+        color: #07111f;
+      }
+    }
+
+    @media (max-width: 920px) {
+      .app {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+
+      .chat-panel {
+        min-height: 660px;
+      }
+
+      .fields,
+      .faq-grid,
+      .launch-options {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      .chat-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .message {
+        max-width: 100%;
+      }
+
+      .composer {
+        grid-template-columns: 1fr;
+      }
+
+      .composer button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <aside class="lead-panel" aria-label="Chatbot summary">
+      <div>
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">R</div>
+          <span>Real Estate Virtual Chatbots</span>
+        </div>
+        <h1>Tell us what you are looking for.</h1>
+        <p class="intro">
+          Answer a few quick questions and a local real estate professional will use your
+          preferences to follow up with helpful next steps.
+        </p>
+
+        <div class="mode-toggle" aria-label="Choose chatbot version">
+          <button class="active" type="button">Buyer</button>
+          <button type="button">Seller</button>
+        </div>
+
+        <section class="summary-card">
+          <h2>Agent Preview</h2>
+          <ul class="summary-list">
+            <li><span>Lead type</span><strong>Buyer</strong></li>
+            <li><span>Area</span><strong>Not answered</strong></li>
+            <li><span>Budget</span><strong>Not answered</strong></li>
+            <li><span>Timeline</span><strong>Not answered</strong></li>
+            <li><span>Qualification</span><strong>Pending</strong></li>
+          </ul>
+          <div class="status">Waiting for first response</div>
+        </section>
+
+        <section class="summary-card" style="margin-top: 14px;">
+          <h2>Launch Options</h2>
+          <div class="launch-options" aria-label="Chatbot launch options">
+            <div class="launch-option">
+              <span aria-hidden="true">WEB</span>
+              <strong>Website Widget</strong>
+              <small>Embedded on an agent site.</small>
+            </div>
+            <div class="launch-option">
+              <span aria-hidden="true">URL</span>
+              <strong>Direct Link</strong>
+              <small>Standalone chat page.</small>
+            </div>
+            <div class="launch-option">
+              <span aria-hidden="true">SMS</span>
+              <strong>Text Link</strong>
+              <small>Sent to buyer or seller leads.</small>
+            </div>
+            <div class="launch-option">
+              <span aria-hidden="true">QR</span>
+              <strong>QR Code</strong>
+              <small>For signs, flyers, and cards.</small>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <p class="side-note">
+        Later add-ons can connect this flow to Google Sheets, EmailJS alerts, and a calendar booking link.
+      </p>
+    </aside>
+
+    <section class="chat-panel" aria-label="Chatbot preview">
+      <header class="chat-header">
+        <div class="chat-title">
+          <strong>Buyer Assistant</strong>
+          <span>Online now - collects lead details through chat</span>
+        </div>
+        <div class="pill">OpenAI API-ready FAQ responses</div>
+      </header>
+
+      <div class="messages">
+        <div class="message bot">
+          <div class="bubble">
+            Welcome. I can help gather your home search details so an agent can follow up with options that fit. To get started, what is your name, phone number, and email?
+          </div>
+          <div class="fields">
+            <textarea class="field" rows="1" placeholder="Name" aria-label="Name"></textarea>
+            <textarea class="field" rows="1" placeholder="Phone number" aria-label="Phone number"></textarea>
+            <textarea class="field" rows="1" placeholder="Email address" aria-label="Email address"></textarea>
+          </div>
+        </div>
+
+        <div class="message bot">
+          <div class="bubble">
+            Great. What budget range feels comfortable?
+          </div>
+          <div class="range-card">
+            <div class="range-row">
+              <span>Buyer budget</span>
+              <span class="range-value">Select a range</span>
+            </div>
+            <input type="range" min="150000" max="800000" value="150000" aria-label="Budget range">
+          </div>
+        </div>
+
+        <div class="message bot">
+          <div class="bubble">
+            How many bedrooms and bathrooms would you like?
+          </div>
+          <div class="range-card">
+            <div class="range-row">
+              <span>Bedrooms</span>
+              <span class="range-value">Select</span>
+            </div>
+            <input type="range" min="1" max="6" value="1" aria-label="Bedrooms">
+            <div class="range-row">
+              <span>Bathrooms</span>
+              <span class="range-value">Select</span>
+            </div>
+            <input type="range" min="1" max="5" value="1" aria-label="Bathrooms">
+          </div>
+        </div>
+
+        <div class="message bot">
+          <div class="bubble">
+            When are you hoping to buy?
+          </div>
+          <div class="chip-row" aria-label="Buying timeline options">
+            <button class="chip" type="button">ASAP</button>
+            <button class="chip" type="button">1-3 months</button>
+            <button class="chip" type="button">3-6 months</button>
+            <button class="chip" type="button">6-12 months</button>
+            <button class="chip" type="button">Just browsing</button>
+          </div>
+        </div>
+
+        <div class="message bot">
+          <div class="bubble">
+            Do you need help getting pre-approved, or do you already have that handled?
+          </div>
+          <div class="chip-row">
+            <button class="chip" type="button">Yes, I need help</button>
+            <button class="chip" type="button">Already pre-approved</button>
+            <button class="chip" type="button">Not sure yet</button>
+          </div>
+        </div>
+
+        <div class="message bot">
+          <div class="bubble">
+            Anything specific you want the agent to know?
+          </div>
+          <textarea class="text-field" aria-label="Showing request" placeholder="Example: preferred neighborhoods, must-have features, showing availability, or questions for the agent."></textarea>
+        </div>
+
+        <div class="message bot">
+          <div class="bubble">
+            I can also answer quick questions while I save this lead summary.
+          </div>
+          <div class="faq-grid">
+            <button type="button">How does pre-approval work?</button>
+            <button type="button">What should I do before touring?</button>
+            <button type="button">How fast can an agent follow up?</button>
+            <button type="button">What happens after I submit this?</button>
+          </div>
+        </div>
+      </div>
+
+      <form class="composer">
+        <input placeholder="Type your answer here..." aria-label="Message">
+        <button type="button">Send</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
