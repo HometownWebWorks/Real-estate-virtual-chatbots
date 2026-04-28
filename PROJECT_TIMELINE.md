@@ -125,6 +125,11 @@ How this will be used:
 - Added `.github/workflows/deploy.yml` so pushes to `main` can build and deploy the static `out/` folder through GitHub Actions.
 - Documented that OpenAI responses, email alerts, Google Sheets, SMS, CRM integrations, and calendar booking should be paid-plan upgrades rather than part of the free static demo.
 
+### 11:43 PM - Live User Summary Panel Restored
+- Restored the live-updating summary panel in the demo.
+- Labeled the panel "Your Summary" so it feels client-facing instead of like an internal agent preview.
+- Summary updates with buyer or seller answers and keeps unanswered fields clearly marked.
+
 ## Next Planned Step
 
 ### Chatbot Prototype Build

@@ -1,6 +1,6 @@
 # Chatbot Requirements
 
-Last updated: April 27, 2026 11:26 PM -04:00
+Last updated: April 27, 2026 11:43 PM -04:00
 
 ## Purpose
 
@@ -38,6 +38,7 @@ The same buyer and seller chatbot flows should be available through multiple lau
 - Technical and launch-option details should stay in project documentation or sales materials, not inside the typical user chatbot experience.
 - Buyer and seller flows should be splittable into separate URLs, QR codes, text links, or embed codes so a prospect only sees the flow they were sent.
 - The general demo may keep a buyer/seller selector for internal review, but realtor-shared buyer-only and seller-only links should hide that selector.
+- The demo should include a client-friendly live summary panel that updates as the user changes their answers.
 
 ## Technical Stack
 

@@ -123,6 +123,34 @@ export function ChatbotApp({ lockedMode = null }) {
     return "Start with your contact details.";
   }, [mode, lead, submitted]);
 
+  const summary = useMemo(() => {
+    const shared = [
+      ["Name", lead.name || "Not answered"],
+      ["Phone", lead.phone || "Not answered"],
+      ["Email", lead.email || "Not answered"]
+    ];
+
+    if (mode === "buyer") {
+      return [
+        ...shared,
+        ["Area", lead.area || "Not answered"],
+        ["Budget", lead.budget ? money(lead.budget) : "Not answered"],
+        ["Beds / Baths", `${lead.bedrooms}+ beds / ${lead.bathrooms}+ baths`],
+        ["Timeline", lead.buyTimeline || "Not answered"],
+        ["Pre-approval", lead.preApproval || "Not answered"]
+      ];
+    }
+
+    return [
+      ...shared,
+      ["Address", lead.address || "Not answered"],
+      ["Home type", lead.homeType || "Not answered"],
+      ["Estimated value", lead.estimatedValue ? money(lead.estimatedValue) : "Not answered"],
+      ["Timeline", lead.sellTimeline || "Not answered"],
+      ["Valuation", lead.wantsValuation || "Not answered"]
+    ];
+  }, [mode, lead]);
+
   function askFaq(question) {
     setFaqAnswer(staticFaqAnswers[question] || "I can help with that. An agent can follow up with more detail.");
   }
@@ -158,6 +186,18 @@ export function ChatbotApp({ lockedMode = null }) {
               <li>A real estate professional can follow up with the next best step.</li>
             </ul>
             <div className="status">{progressLabel}</div>
+          </section>
+
+          <section className="summary-card">
+            <h2>Your Summary</h2>
+            <ul className="summary-list">
+              {summary.map(([label, value]) => (
+                <li key={label}>
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </li>
+              ))}
+            </ul>
           </section>
         </div>
       </aside>
