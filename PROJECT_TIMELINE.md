@@ -130,6 +130,19 @@ How this will be used:
 - Labeled the panel "Your Summary" so it feels client-facing instead of like an internal agent preview.
 - Summary updates with buyer or seller answers and keeps unanswered fields clearly marked.
 
+## April 28, 2026
+
+### 12:05 AM - Outreach Pitch Document Added
+- Created `OUTREACH_PITCHES.txt` as a quick notepad-style file for Facebook and Instagram copy/paste outreach.
+- Added the first realtor pitch message focused on marketplace listings, gaining traffic, lead qualification, and a demo walkthrough.
+
+## April 29, 2026
+
+### 4:10 PM - Public Demo QR Codes Added
+- Generated scannable PNG QR codes for the public GitHub Pages demo links.
+- Added QR codes for the main demo, buyer-only demo, and seller-only demo.
+- Stored the files in `qr-codes/` for easy access when creating flyers, posts, signs, or messages.
+
 ## Next Planned Step
 
 ### Chatbot Prototype Build

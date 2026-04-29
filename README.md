@@ -14,6 +14,8 @@ The first build step is to define two chatbot flows: one for buyers and one for 
 - `app/` contains the working Next.js chatbot prototype.
 - `PRICING_OPTIONS.md` contains the current service pricing tiers and value positioning.
 - `.github/workflows/deploy.yml` publishes the static demo to GitHub Pages when changes are pushed to `main`.
+- `OUTREACH_PITCHES.txt` contains copy/paste outreach messages for Facebook and Instagram.
+- `qr-codes/` contains scannable PNG QR codes for the public demo links.
 
 ## Local Prototype
 
@@ -44,6 +46,12 @@ GitHub Pages links after deployment should look like:
 - `https://hometownwebworks.github.io/Real-estate-virtual-chatbots/`
 - `https://hometownwebworks.github.io/Real-estate-virtual-chatbots/buyer/`
 - `https://hometownwebworks.github.io/Real-estate-virtual-chatbots/seller/`
+
+QR code files:
+
+- `qr-codes/main-demo-qr.png`
+- `qr-codes/buyer-demo-qr.png`
+- `qr-codes/seller-demo-qr.png`
 
 In the GitHub repository, set Pages to deploy from **GitHub Actions**.
 
